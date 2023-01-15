@@ -14,10 +14,26 @@
                 <div class="bg-white">
 
                   <div class="bg-gray px-4 py-2 bg-light">
-                    <p class="h5 mb-0 py-1">Recent</p>
+                    <button type="button" class="btn btn-primary">
+                      Notifications <span class="badge bg-secondary">{{publishedNotifications.length}}</span>
+                    </button>
                   </div>
 
                   <div class="messages-box" style="height: 520px">
+                    <div class="list-group-item-dark rounded-pill" *ngFor="let notif of publishedNotifications" style="height: 90px">
+
+
+                      <a class="list-group-item-dark active list-group-item-action text-white rounded-pill"  >
+                        <div class="media"  ><img src="../../../assets/img/icons/lineal/chat.svg" alt="user"   width="80" class="rounded-circle">
+                          <div class="media-body ml-4">
+
+                            <p class="font-italic mb-0 text-small">{{notif.message}}</p>
+                          </div>
+                        </div>
+                      </a>
+
+
+                    </div>
                   </div>
                 </div>
               </div>
@@ -49,7 +65,7 @@
                     <input  placeholder="Type a message" aria-describedby="button-addon2"  autocomplete="off" type="text" name="message"
                             [(ngModel)]="message" (keypress)="sendTypeIndicator()" class="form-control rounded-0 border-0 py-4 bg-light">
                     <div class="input-group-append">
-                      <button  type="submit" (click)="sendTypeIndicator()" class="btn btn-success"> Send</button>
+                      <button  type="submit" (click)="sendNotificaion()" class="btn btn-success"> Send</button>
                     </div>
                   </div>
                 </form>

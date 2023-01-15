@@ -23,6 +23,7 @@ export class NotificationsComponent implements OnInit {
 
   heurs : Date = new Date();
   daysa : Date = new Date();
+   publishedNotifications: Message[] = [];
 
   constructor(private websocketService: WebsocketService,private snackbar:MatSnackBar) {
 
@@ -60,8 +61,14 @@ export class NotificationsComponent implements OnInit {
       if (message.type == 'MESSAGE') {
         this.publishedMessage.push(message);
       } else if (message.type == 'NOTIFICATIONS') {
+        this.publishedNotifications.push(message);
         if (message.from != this.loggedinUserId) {
-          this.showUserTypingIndicator(message.message);
+          this.showNotifications(message.message);
+        }
+      }else if (message.type == 'TYPING')
+      {
+        if (message.from != this.loggedinUserId) {
+          this.showUserTypingIndicator(message.fromUserName);
         }
       }
     };
@@ -91,6 +98,16 @@ export class NotificationsComponent implements OnInit {
 
   sendTypeIndicator() {
     let message: Message = {
+      type: 'TYPING',
+      from: 2,
+      fromUserName: 'arfaoui new',
+      message: 'aa text'
+    };
+    this.websocket.send(JSON.stringify(message));
+  }
+
+  sendNotificaion() {
+    let message: Message = {
       type: 'NOTIFICATIONS',
       from: 2,
       fromUserName: 'arfaoui new',
@@ -102,12 +119,6 @@ export class NotificationsComponent implements OnInit {
   showUserTypingIndicator(userName: string) {
     this.typingUser = userName;
 
-    this.snackbar.open(' ajout avec succees', 'Undo', {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['alert-red'],
-    });
     this.showTypingIndicator = true;
     setTimeout(() => {
       this.hideUserTypingIndicator();
@@ -166,4 +177,16 @@ export class NotificationsComponent implements OnInit {
   }
 
 
+  private showNotifications(message: string) {
+    this.snackbar.open(message, 'Undo', {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['alert-red']
+    });
+    this.showTypingIndicator = true;
+    setTimeout(() => {
+      this.hideUserTypingIndicator();
+    }, 2000);
+  }
 }

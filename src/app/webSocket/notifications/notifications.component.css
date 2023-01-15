@@ -73,10 +73,9 @@ input::placeholder {
   color: #eb6b8c;
 }
 
-::ng-deep mat-snack-bar-container.alert-red{
-  padding: 20px ;
-  --mdc-snackbar-supporting-text-color: black;
-  --mdc-snackbar-container-color: #c7bed5 !important;
+::ng-deep .alert-red{
+  padding: 20px 10px 20px 10px;
+  --mdc-snackbar-container-color: #516275;
 }
 
 
