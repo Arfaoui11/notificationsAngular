@@ -11,6 +11,11 @@ import {WhoareweComponent} from "./whoarewe/whoarewe.component";
 import {BodyComponent} from "./body/body.component";
 import {NotificationsComponent} from "./webSocket/notifications/notifications.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ToastrModule} from "ngx-toastr";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {AppServiceService} from "./services/app-service.service";
+import {WebsocketService} from "./services/websocket.service";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,17 +23,24 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AccueilComponent,
     WhoareweComponent,
     BodyComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    MatSidenavModule,
     FormsModule,
+    ToastrModule.forRoot({
+      timeOut: 15000, // 15 seconds
+      closeButton: true,
+      progressBar: true,
+    }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [AppServiceService,WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

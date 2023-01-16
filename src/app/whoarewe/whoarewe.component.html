@@ -1,1 +1,11 @@
-<h1>test</h1>
+<form  class="bg-light" (ngSubmit)="sendNotificaion()">
+  <div class="input-group">
+
+    <input  placeholder="Type a message" aria-describedby="button-addon2"  autocomplete="off" type="text" name="message"
+            [(ngModel)]="message"  class="form-control rounded-0 border-0 py-4 bg-light">
+    <div class="input-group-append">
+      <button  type="submit"  class="btn btn-success"> Send Notification </button>
+    </div>
+
+  </div>
+</form>

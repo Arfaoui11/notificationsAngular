@@ -1,7 +1,10 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {WebsocketService} from "../../services/websocket.service";
 import {Message} from "../../model/Message";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ToastrService} from "ngx-toastr";
+import {AppServiceService} from "../../services/app-service.service";
+import {Notification} from "../../model/Notification";
 
 
 
@@ -12,7 +15,7 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-  users: any[] = new Array();
+  notifications: Notification[] = [];
   message: string = '';
   publishedMessage: Message[] = [];
   showTypingIndicator: boolean = false;
@@ -25,7 +28,7 @@ export class NotificationsComponent implements OnInit {
   daysa : Date = new Date();
    publishedNotifications: Message[] = [];
 
-  constructor(private websocketService: WebsocketService,private snackbar:MatSnackBar) {
+  constructor(private websocketService: WebsocketService,private snackbar:MatSnackBar,private appService: AppServiceService,private toastrService: ToastrService) {
 
 
     this.websocket = this.websocketService.createNew();
@@ -41,16 +44,15 @@ export class NotificationsComponent implements OnInit {
     };
 
     this.startListening2();
-
+    this.startListening();
 
   }
 
 
 
   ngOnInit(): void {
-    this.websocket = this.websocketService.createNew();
-    this.startListening();
 
+    this.startListening();
   }
 
 
@@ -60,11 +62,6 @@ export class NotificationsComponent implements OnInit {
       let message: Message = JSON.parse(event.data);
       if (message.type == 'MESSAGE') {
         this.publishedMessage.push(message);
-      } else if (message.type == 'NOTIFICATIONS') {
-        this.publishedNotifications.push(message);
-        if (message.from != this.loggedinUserId) {
-          this.showNotifications(message.message);
-        }
       }else if (message.type == 'TYPING')
       {
         if (message.from != this.loggedinUserId) {
@@ -84,15 +81,8 @@ export class NotificationsComponent implements OnInit {
       fromUserName: 'mahdi',
       message: msg
     };
-    for (let u of this.users)
-    {
-      if (u.id == this.currentUser.id)
-      {
-        u.isOnline = true;
-      }
-    }
+    this.websocketService.sendMessage(message);
 
-    this.websocket.send(JSON.stringify(message));
     this.message = '';
   }
 
@@ -101,17 +91,19 @@ export class NotificationsComponent implements OnInit {
       type: 'TYPING',
       from: 2,
       fromUserName: 'arfaoui new',
-      message: 'aa text'
+      message: 'asd'
     };
     this.websocket.send(JSON.stringify(message));
   }
 
   sendNotificaion() {
+    let msg = this.message;
+    if (msg == '' || msg == undefined) return;
     let message: Message = {
       type: 'NOTIFICATIONS',
       from: 2,
       fromUserName: 'arfaoui new',
-      message: 'Add new courses'
+      message: msg
     };
     this.websocket.send(JSON.stringify(message));
   }
@@ -130,6 +122,8 @@ export class NotificationsComponent implements OnInit {
       this.showTypingIndicator = false;
     }
   }
+
+
 
 
   startListening2() {
@@ -154,13 +148,13 @@ export class NotificationsComponent implements OnInit {
     // this.users = user;
     // console.log(user);
 
-    for (let u of this.users)
+   /* for (let u of this.notifications)
     {
       if (u.id == userId)
       {
         u.isOnline = true;
       }
-    }
+    }*/
 
 
   }
@@ -177,16 +171,9 @@ export class NotificationsComponent implements OnInit {
   }
 
 
-  private showNotifications(message: string) {
-    this.snackbar.open(message, 'Undo', {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['alert-red']
-    });
-    this.showTypingIndicator = true;
-    setTimeout(() => {
-      this.hideUserTypingIndicator();
-    }, 2000);
+  private showNotifications(message: Message) {
+    this.websocketService.showNotifications(message);
   }
+
+
 }

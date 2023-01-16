@@ -9,11 +9,16 @@ import {NotificationsComponent} from "./webSocket/notifications/notifications.co
 const routes: Routes =
 
   [
-    { path: 'whoarewe', component: WhoareweComponent },
-    { path: 'home', component: BodyComponent },
-    { path: 'notif', component: NotificationsComponent },
-    { path: '',  redirectTo: '/home', pathMatch: 'full' },
 
+    { path: '',  redirectTo: '/front/notif', pathMatch: 'full' },
+    {
+      path: 'front',
+      component: BodyComponent,
+      children: [
+        { path: 'notif',  component: NotificationsComponent },
+        { path: 'whoarewe', component: WhoareweComponent },
+      ]
+    },
   ];
 
 
