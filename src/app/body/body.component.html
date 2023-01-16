@@ -46,7 +46,7 @@
                 <button type="button" class="btn-close btn-close-white offcanvas-close offcanvas-nav-close" aria-label="Close"></button>
               </div>
               <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#!">WHAT WE DO?</a>
+                <li class="nav-item"><a class="nav-link" [routerLink]="['accueil']">Accueil</a>
 
                   <!--/.dropdown-menu -->
                 </li>
@@ -59,11 +59,11 @@
                 <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#!">CASE STUDIES</a>
                   <ul class="dropdown-menu">
                     <li class="nav-item"><a class="dropdown-item" href="./blog.html">CASE STUDIES 1</a></li>
-                    <li class="nav-item"><a class="dropdown-item" href="./blog2.html">CASE STUDIES 2</a></li>
+                    <li class="nav-item"><a class="dropdown-item" [routerLink]="['accueil']">Accueil</a></li>
                   </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" [routerLink]="['whoarewe']">WHO ARE WE?</a>
-                <li class="nav-item"><a class="nav-link" (click)="drawer.toggle()">Snack</a>
+                <li class="nav-item"><a class="nav-link" (click)="drawer.toggle();getlistNotification()">Snack</a>
 
                   <!--/.dropdown-menu -->
                 </li>

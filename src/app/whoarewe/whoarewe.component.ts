@@ -13,10 +13,11 @@ export class WhoareweComponent implements OnInit {
   constructor(private websocketService: WebsocketService) {
 
     this.websocket = this.websocketService.createNew();
+
   }
 
   ngOnInit(): void {
-    this.websocketService.initaliseSubs();
+
   }
 
   sendNotificaion() {

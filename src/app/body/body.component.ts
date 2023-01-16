@@ -30,7 +30,7 @@ export class BodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.getlistNotification();
-    this.startListening();
+    this.websocketService.initaliseSubs();
   }
 
   startListening2() {

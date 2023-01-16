@@ -44,7 +44,6 @@ export class NotificationsComponent implements OnInit {
     };
 
     this.startListening2();
-    this.startListening();
 
   }
 
@@ -52,7 +51,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.startListening();
+    //this.startListening();
   }
 
 
@@ -82,7 +81,7 @@ export class NotificationsComponent implements OnInit {
       message: msg
     };
     this.websocketService.sendMessage(message);
-
+    this.publishedMessage.push(message);
     this.message = '';
   }
 
@@ -171,9 +170,7 @@ export class NotificationsComponent implements OnInit {
   }
 
 
-  private showNotifications(message: Message) {
-    this.websocketService.showNotifications(message);
-  }
+
 
 
 }
