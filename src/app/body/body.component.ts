@@ -30,8 +30,11 @@ export class BodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.getlistNotification();
-    this.websocketService.initaliseSubs();
+    this.startListening();
+    //this.websocketService.initaliseSubs();
+   // this.updateNotification(this.websocketService.getList().content)
   }
+
 
   startListening2() {
     this.websocket.onmessage = (event: MessageEvent) => {
@@ -49,9 +52,9 @@ export class BodyComponent implements OnInit {
       let message: Message = JSON.parse(event.data);
       if (message.type == 'MESSAGE') {
         // this.publishedMessage.push(message);
-
+        console.log("notifications send ")
       } else if (message.type == 'NOTIFICATIONS') {
-       // console.log("notifications send ")
+        console.log("notifications send ")
         this.updateNotification(message.message)
       }
     };

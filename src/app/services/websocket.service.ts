@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {HostListener, Injectable, OnInit} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AppServiceService} from "./app-service.service";
 import {ToastrService} from "ngx-toastr";
@@ -20,11 +20,11 @@ export class WebsocketService  {
   loggedinUserId: number;
   websocket: WebSocket;
   currentUser: any = [];
+  public notif: Notification;
 
   constructor(private snackbar:MatSnackBar,private appService: AppServiceService,private toastrService: ToastrService) {
     this.websocket = this.createNew();
 
-   // this.initaliseSubs();
     this.startListening2();
   }
   initaliseSubs(){
@@ -63,7 +63,8 @@ export class WebsocketService  {
     this.websocket.onmessage = (event: MessageEvent) => {
       let message: Message = JSON.parse(event.data);
       if (message.type == 'MESSAGE') {
-        console.log("MESSAGE send ")
+        console.log("MESSAGE send ");
+        this.publishedMessage.push(message);
         this.showInfo(message.message,message.type);
       } else if (message.type == 'NOTIFICATIONS') {
 
@@ -98,10 +99,10 @@ export class WebsocketService  {
       createAt: new Date()
     }
     this.appService.userLogin(notif).subscribe(data => {
-
+    this.notifications.push(data);
     });
     this.showSuccess(message.message,message.type);
-
+    this.sendupdate(notif);
   }
 
   deletenotification(idNotification: any) {
@@ -116,5 +117,24 @@ export class WebsocketService  {
   }
 
 
+  sendupdate(n : Notification) {
+    console.log("save work")
+    this.notif = n;
+  }
 
+  getList() {
+    console.log("get work")
+    return this.notif;
+  }
+
+  @HostListener('window:beforeunload')
+  close() {
+    let message: Message = {
+      type: 'LEFT',
+      from: 1,
+      fromUserName: 'mahdi',
+      message: ""
+    }
+    this.websocket.send(JSON.stringify(message));
+  }
 }

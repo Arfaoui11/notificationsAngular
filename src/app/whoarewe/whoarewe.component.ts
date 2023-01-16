@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {WebsocketService} from "../services/websocket.service";
 import {Message} from "../model/Message";
 
@@ -29,6 +29,17 @@ export class WhoareweComponent implements OnInit {
       fromUserName: 'arfaoui new',
       message: msg
     };
+    this.websocket.send(JSON.stringify(message));
+  }
+
+  @HostListener('window:beforeunload')
+  close() {
+    let message: Message = {
+      type: 'LEFT',
+      from: 1,
+      fromUserName: 'mahdi',
+      message: ""
+    }
     this.websocket.send(JSON.stringify(message));
   }
 
