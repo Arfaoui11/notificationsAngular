@@ -26,6 +26,6 @@ export class BottomSheetComponent {
   deleteNotif(id:number)
   {
     this.websocketService.deletenotification(id);
-   // this.actions = this.actions.filter(tq => tq.idNotification != id);
+    this.actions = this.actions.filter((tq: { idNotification: number; }) => tq.idNotification != id);
   }
 }

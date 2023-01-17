@@ -11,11 +11,11 @@ const routes: Routes = [
 
 
   {
-    path: 'a',
+    path: 'dashboard',
     component: AccueilComponent,
     children: [
       {
-        path: 'c',
+        path: '',
         component: DashboardComponent,
         children: [
           { path: 'whoarewe', component: WhoareweComponent },
@@ -23,7 +23,6 @@ const routes: Routes = [
       }
     ]
   },
-
   {
     path: 'countnotif',
     component:NotifCountComponent/*,
@@ -36,7 +35,7 @@ const routes: Routes = [
   } ,
   {
     path: '',
-    redirectTo: '/a/c/whoarewe',
+    redirectTo: 'dashboard/whoarewe',
     pathMatch: 'full'
   }
   ];
