@@ -1,13 +1,13 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {WebsocketService} from "../services/websocket.service";
-import {Message} from "../model/Message";
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {WebsocketService} from "../../services/websocket.service";
+import {Message} from "../../model/Message";
 
 @Component({
   selector: 'app-whoarewe',
   templateUrl: './whoarewe.component.html',
-  styleUrls: ['./whoarewe.component.css']
+  styleUrls: ['./whoarewe.component.scss']
 })
-export class WhoareweComponent implements OnInit {
+export class WhoareweComponent implements OnInit,OnDestroy {
   websocket: WebSocket;
   message: string = '';
   constructor(private websocketService: WebsocketService) {
@@ -18,6 +18,10 @@ export class WhoareweComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  ngOnDestroy() {
+    this.websocket.close();
   }
 
   sendNotificaion() {
@@ -42,5 +46,6 @@ export class WhoareweComponent implements OnInit {
     }
     this.websocket.send(JSON.stringify(message));
   }
+
 
 }

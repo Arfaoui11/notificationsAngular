@@ -53,9 +53,7 @@ export class WebsocketService  {
   }
 
   sendMessage(mess : Message) {
-
     this.websocket.send(JSON.stringify(mess));
-    this.message = '';
 
   }
 
@@ -67,8 +65,7 @@ export class WebsocketService  {
         this.publishedMessage.push(message);
         this.showInfo(message.message,message.type);
       } else if (message.type == 'NOTIFICATIONS') {
-
-          console.log("NOTIFICATIONS send ")
+          console.log("NOTIFICATIONS send 2")
           this.showNotifications(message);
 
       }
@@ -87,13 +84,7 @@ export class WebsocketService  {
     }
   }
 
-
-
-
-
   public showNotifications(message: Message) {
-
-
     let notif: any = {
       content : message.message,
       createAt: new Date()
@@ -102,12 +93,22 @@ export class WebsocketService  {
     this.notifications.push(data);
     });
     this.showSuccess(message.message,message.type);
-    this.sendupdate(notif);
+   // this.sendupdate(notif);
   }
 
   deletenotification(idNotification: any) {
     this.appService.deleteNotification(idNotification).subscribe(data => {
     })
+  }
+
+  sendTypeIndicator() {
+    let message: Message = {
+      type: 'TYPING',
+      from: 2,
+      fromUserName: 'arfaoui new',
+      message: 'asd'
+    };
+    this.websocket.send(JSON.stringify(message));
   }
 
   hideUserTypingIndicator() {
@@ -116,18 +117,11 @@ export class WebsocketService  {
     }
   }
 
-
-  sendupdate(n : Notification) {
-    console.log("save work")
-    this.notif = n;
+  destroySession()
+  {
+    this.websocket.close();
   }
-
-  getList() {
-    console.log("get work")
-    return this.notif;
-  }
-
-  @HostListener('window:beforeunload')
+  @HostListener('window:unload')
   close() {
     let message: Message = {
       type: 'LEFT',
@@ -137,4 +131,7 @@ export class WebsocketService  {
     }
     this.websocket.send(JSON.stringify(message));
   }
+
+
+
 }

@@ -1,0 +1,21 @@
+
+  <div class="messages-box" >
+    <div class="list-group-item rounded" *ngFor="let notif of actions " autofocus>
+
+
+      <a class="list-group-item-dark active list-group-item-action text-black" style="margin-top: 20px" >
+        <div class="media"  ><img src="../../../assets/notif.png" alt="user" style="margin-top: 10px"  width="40" class="rounded-circle">
+          <div class="media-body m-lg-0 ">
+            <button type="button" class="btn btn-danger" style="float: right;margin-top: 10px;margin-right: 10px" (click)="deleteNotif(notif.idNotification)">X</button>
+            <p class="font-italic mb-0 text-small">{{notif.content.toUpperCase()}}</p>
+            <p class="font-italic mb-0 text-small">{{notif.createAt | date :'short'  }}</p>
+          </div>
+
+        </div>
+      </a>
+
+
+    </div>
+  </div>
+
+

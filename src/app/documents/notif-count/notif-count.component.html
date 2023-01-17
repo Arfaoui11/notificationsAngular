@@ -1,0 +1,22 @@
+
+
+
+  <ul class="navbar-nav ">
+    <li >
+      <div class="bg-gray px-4 py-2 bg-light">
+        <button type="button" class="btn btn-primary" mat-raised-button (click)="openBottomSheet()" *ngIf="notifications?.length > 0">
+          Notifications <span class="badge bg-secondary">{{notifications.length}}</span>
+        </button>
+      </div>
+    </li>
+    <li >
+      <div class="bg-gray px-4 py-2 bg-light">
+        <button type="button" class="btn btn-primary">
+          Back
+        </button>
+      </div>
+    </li>
+  </ul>
+
+
+

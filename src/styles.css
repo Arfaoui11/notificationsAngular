@@ -1,14 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+*, html, body{
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #caddec;
+}
+
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-::ng-deep .alert-red{
-  max-width: 100% !important;
-  min-width: 0% !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  margin: 32px !important;
-  box-shadow: none;
-  --mdc-snackbar-container-color: #eb6b8c !important;
-}

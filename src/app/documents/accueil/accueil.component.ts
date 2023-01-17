@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {WebsocketService} from "../../services/websocket.service";
 
 @Component({
   selector: 'app-accueil',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccueilComponent implements OnInit {
 
-  constructor() { }
 
+  constructor(private websocketService: WebsocketService)
+  {
+
+  }
   ngOnInit(): void {
+    this.websocketService.initaliseSubs();
   }
 
 }

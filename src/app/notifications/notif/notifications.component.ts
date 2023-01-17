@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {WebsocketService} from "../../services/websocket.service";
 import {Message} from "../../model/Message";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -12,9 +12,9 @@ import {Notification} from "../../model/Notification";
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css']
+  styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit,OnDestroy {
   notifications: Notification[] = [];
   message: string = '';
   publishedMessage: Message[] = [];
@@ -26,7 +26,7 @@ export class NotificationsComponent implements OnInit {
 
   heurs : Date = new Date();
   daysa : Date = new Date();
-   publishedNotifications: Message[] = [];
+  publishedNotifications: Message[] = [];
 
   constructor(private websocketService: WebsocketService,private snackbar:MatSnackBar,private appService: AppServiceService,private toastrService: ToastrService) {
 
@@ -47,11 +47,12 @@ export class NotificationsComponent implements OnInit {
 
   }
 
-
-
   ngOnInit(): void {
+    this.startListening();
+  }
 
-    //this.startListening();
+  ngOnDestroy() {
+    this.websocket.close();
   }
 
 
@@ -63,9 +64,7 @@ export class NotificationsComponent implements OnInit {
         this.publishedMessage.push(message);
       }else if (message.type == 'TYPING')
       {
-        if (message.from != this.loggedinUserId) {
-          this.showUserTypingIndicator(message.fromUserName);
-        }
+        this.showUserTypingIndicator(message.fromUserName);
       }
     };
   }
@@ -81,18 +80,12 @@ export class NotificationsComponent implements OnInit {
       message: msg
     };
     this.websocketService.sendMessage(message);
-    this.publishedMessage.push(message);
+   // this.publishedMessage.push(message);
     this.message = '';
   }
 
   sendTypeIndicator() {
-    let message: Message = {
-      type: 'TYPING',
-      from: 2,
-      fromUserName: 'arfaoui new',
-      message: 'asd'
-    };
-    this.websocket.send(JSON.stringify(message));
+    this.websocketService.sendTypeIndicator();
   }
 
   sendNotificaion() {
@@ -147,7 +140,7 @@ export class NotificationsComponent implements OnInit {
     // this.users = user;
     // console.log(user);
 
-   /* for (let u of this.notifications)
+   /* for (let u of this.notif)
     {
       if (u.id == userId)
       {

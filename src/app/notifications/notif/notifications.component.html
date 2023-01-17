@@ -1,0 +1,97 @@
+<app-dashboard>
+
+  <div content class="body py-5 w-100 "  style="overflow: scroll; max-height: 120vh;" >
+
+    <div class=" mx-5" >
+      <p class="title-1">Title</p>
+      <p class="title-2 ">subtitle</p>
+
+
+      <div class="body" >
+
+        <div class="container py-2 px-1">
+          <!-- For demo purpose-->
+          <div class="row rounded-lg overflow-hidden shadow">
+            <!-- Users box-->
+            <div class="col-5 px-0">
+              <div class="bg-white">
+
+                <!--<div class="bg-gray px-4 py-2 bg-light">
+                  <button type="button" class="btn btn-primary">
+                    Notifications <span class="badge bg-secondary">{{notif.length}}</span>
+                  </button>
+                </div>
+
+                <div class="messages-box" style="height: 520px">
+                  <div class="list-group-item-dark rounded-pill" *ngFor="let notif of notif " style="height: 90px">
+
+
+                    <a class="list-group-item-dark active list-group-item-action text-white rounded-pill"  >
+                      <div class="media"  ><img src="../../../assets/notif.png" alt="user"   width="30" class="rounded-circle">
+                        <div class="media-body ml-4">
+                          <button type="button" class="btn btn-primary" style="float: right;margin-right: 20px" (click)="deletenotification(notif.idNotification)">X</button>
+                          <p class="font-italic mb-0 text-small">{{notif.content}}</p>
+                          <p class="font-italic mb-0 text-small">{{notif.createAt | date :'short'  }}</p>
+                        </div>
+
+                      </div>
+                    </a>
+
+
+                  </div>
+                </div>-->
+              </div>
+            </div>
+            <!-- Chat Box-->
+            <div class="col-7 px-0">
+              <div class="px-4 py-5 chat-box bg-white">
+
+                <!-- Sender Message-->
+                <div class="media w-50 mb-3" *ngFor="let message of publishedMessage" ><img src="../../../assets/img/avatars/t3.jpg" alt="user" width="300" class="rounded-circle">
+                  <div class="media-body ml-3">
+                    <div class="bg-light rounded py-2 px-3 mb-2">
+                      <P>{{message.fromUserName}}</P>
+                      <p class="text-small mb-0 text-muted" style="color: #0dcaf0">{{message.message}}</p>
+                    </div>
+                    <p class="small text-muted">{{heurs.getHours().toString().toUpperCase()+":"+ heurs.getMinutes() .toString().toUpperCase() }} PM | {{daysa.getDate().toString().toUpperCase() +" "+daysa.getMonth().toString().toUpperCase() +" "+daysa.getFullYear().toString().toUpperCase() }}</p>
+                  </div>
+                </div>
+
+                <!-- Reciever Message-->
+
+
+              </div>
+
+              <!-- Typing area -->
+              <form  class="bg-light" (ngSubmit)="sendMessage()">
+                <div *ngIf="showTypingIndicator" class="typing-indicator">{{typingUser}} is typing...</div>
+                <div class="input-group">
+
+                  <input  placeholder="Type a message" aria-describedby="button-addon2"  autocomplete="off" type="text" name="message"
+                          [(ngModel)]="message" (keypress)="sendTypeIndicator()" class="form-control rounded-0 border-0 py-4 bg-light">
+                  <div class="input-group-append">
+                    <button  type="submit"  class="btn btn-success"> Send </button>
+
+                  </div>
+
+                </div>
+              </form>
+              <button  (click)="sendNotificaion()" class="btn btn-secondary"> Send Notification </button>
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <div class="bd-error-btn text-center">
+          <a href="../../../index.html" class="theme-btn">Back To Home</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</app-dashboard>
+

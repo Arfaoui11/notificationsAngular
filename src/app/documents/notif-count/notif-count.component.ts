@@ -1,37 +1,37 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {Message} from "../model/Message";
-import {WebsocketService} from "../services/websocket.service";
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import { MatBottomSheet} from "@angular/material/bottom-sheet";
+import {BottomSheetComponent} from "../bottom-sheet/bottom-sheet.component";
+import {Notification} from "../../model/Notification";
+import {WebsocketService} from "../../services/websocket.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {AppServiceService} from "../services/app-service.service";
+import {AppServiceService} from "../../services/app-service.service";
 import {ToastrService} from "ngx-toastr";
-import {Notification} from "../model/Notification";
+import {Message} from "../../model/Message";
 
 @Component({
-  selector: 'app-body',
-  templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css']
+  selector: 'app-notif-count',
+  templateUrl: './notif-count.component.html',
+  styleUrls: ['./notif-count.component.css']
 })
-export class BodyComponent implements OnInit {
-  showFiller = false;
+export class NotifCountComponent implements OnInit,OnDestroy {
+
   websocket: WebSocket;
-  notifications: Notification[] = [];
+  notifications: any;
 
-  constructor(private websocketService: WebsocketService,private snackbar:MatSnackBar,private appService: AppServiceService) {
 
+  constructor(private bottomSheet: MatBottomSheet,private websocketService: WebsocketService,private snackbar:MatSnackBar,private appService: AppServiceService) {
     this.websocket = this.websocketService.createNew();
 
 
     this.startListening2();
-
-
   }
-
-
 
   ngOnInit(): void {
     this.getlistNotification();
     this.startListening();
-
+  }
+  ngOnDestroy() {
+    this.websocket.close();
   }
 
 
@@ -40,7 +40,7 @@ export class BodyComponent implements OnInit {
       let message: Message = JSON.parse(event.data);
       if (message.type == 'JOINED') {
         console.log(message.type);
-      //  this.setUserStatus(message.from, true);
+        //  this.setUserStatus(message.from, true);
       } else if (message.type == 'LEFT') {
         //this.setUserStatus(message.from, false);
       }
@@ -53,7 +53,7 @@ export class BodyComponent implements OnInit {
         // this.publishedMessage.push(message);
         console.log("notif send ")
       } else if (message.type == 'NOTIFICATIONS') {
-        console.log("notif send 1")
+        console.log("notif update")
         this.updateNotification(message.message)
       }
     };
@@ -71,7 +71,7 @@ export class BodyComponent implements OnInit {
   deleteNotif(id:number)
   {
     this.websocketService.deletenotification(id);
-    this.notifications = this.notifications.filter(t => t.idNotification != id);
+   // this.notifications = this.notifications.filter(t => t.idNotification != id);
   }
 
   getlistNotification()
@@ -84,7 +84,7 @@ export class BodyComponent implements OnInit {
 
 
     });
-  return this.notifications;
+    return this.notifications;
   }
 
   @HostListener('window:beforeunload')
@@ -97,5 +97,10 @@ export class BodyComponent implements OnInit {
     }
     this.websocket.send(JSON.stringify(message));
   }
+  openBottomSheet(): void {
+    this.bottomSheet.open(BottomSheetComponent,{
+      data: this.notifications
 
+    });
+  }
 }
