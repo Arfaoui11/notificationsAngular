@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WebsocketService} from "../../services/websocket.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {WebsocketService} from "../../services/websocket.service";
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })
-export class AccueilComponent implements OnInit {
+export class AccueilComponent implements OnInit,OnDestroy {
 
 
   constructor(private websocketService: WebsocketService)
@@ -15,6 +15,10 @@ export class AccueilComponent implements OnInit {
   }
   ngOnInit(): void {
     this.websocketService.initaliseSubs();
+  }
+  ngOnDestroy() {
+    // this.websocketService.destroySession();
+
   }
 
 }

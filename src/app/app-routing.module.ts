@@ -4,29 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 
-/*const routes: Routes =
-
-  [
-
-    { path: '',  redirectTo: '/front/end/notif', pathMatch: 'full' },
-    {
-      path: 'front',
-      component: AccueilComponent,
-      children: [
-        {
-        path: 'end',
-        component: BodyComponent,
-        children: [
-          { path: 'notif',  component: NotificationsComponent },
-        { path: 'whoarewe', component: WhoareweComponent },
-        { path: 'accueil', component: AccueilComponent },
-       ],
-        }
-
-
-      ]
-    },
-  ];*/
 
 const routes: Routes = [
 
@@ -38,6 +15,10 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)
+  },
+  {
+    path: 'rapport',
+    loadChildren: () => import('./rapports/rapports.module').then(m => m.RapportsModule)
   },
 
 

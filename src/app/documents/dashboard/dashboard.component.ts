@@ -17,7 +17,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit,OnDestroy {
-
+  @ViewChild('drawer') drawer:any;
   websocket: WebSocket;
   notifications: any;
   constructor(private responsive: BreakpointObserver,private websocketService: WebsocketService,private bottomSheet: MatBottomSheet,private appService: AppServiceService){
@@ -28,18 +28,18 @@ export class DashboardComponent implements OnInit,OnDestroy {
     this.startListening2();
 
   }
-  @ViewChild('drawer') drawer:any;
+
 
 
   hideSideMenu = true;
   ngOnInit(): void {
     this.startListening();
     this.getlistNotification();
-  // this.websocketService.initaliseSubs();
+
   }
 
   ngOnDestroy() {
-   // this.websocketService.destroySession();
+    this.websocket.close()
   }
 
   startListening2() {

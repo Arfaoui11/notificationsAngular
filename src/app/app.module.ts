@@ -13,15 +13,15 @@ import {ToastrModule} from "ngx-toastr";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AppServiceService} from "./services/app-service.service";
 import {WebsocketService} from "./services/websocket.service";
-import { FooterComponent } from './footer/footer.component';
+
 
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import { RapportsModule } from './rapports/rapports.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     BodyComponent,
-    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
       progressBar: true,
     }),
     HttpClientModule,
+    RapportsModule,
 
   ],
   providers: [AppServiceService,WebsocketService],
