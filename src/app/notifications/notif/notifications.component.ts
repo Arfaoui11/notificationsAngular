@@ -15,6 +15,8 @@ import {Notification} from "../../model/Notification";
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit,OnDestroy {
+
+
   notifications: Notification[] = [];
   message: string = '';
   publishedMessage: Message[] = [];
